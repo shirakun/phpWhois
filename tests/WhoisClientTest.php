@@ -1,6 +1,6 @@
 <?php
 
-use phpWhois\WhoisClient;
+use shirakun\WhoisClient;
 
 class WhoisClientTest extends \PHPUnit_Framework_TestCase
 {

@@ -27,7 +27,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
-use phpWhois\Whois;
+use shirakun\Whois;
 
 // Read domain list to test
 

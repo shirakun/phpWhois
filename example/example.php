@@ -32,8 +32,8 @@ if (file_exists(__DIR__.'/../vendor/autoload.php')) {
     require_once __DIR__.'/../vendor/autoload.php';
 }
 
-use phpWhois\Whois;
-use phpWhois\Utils;
+use shirakun\Whois;
+use shirakun\Utils;
 $whois = new Whois();
 
 if (isset($_GET['query'])) {

@@ -1,6 +1,6 @@
 <?php
 
-use phpWhois\Whois;
+use shirakun\Whois;
 
 class WhoisTest extends \PHPUnit_Framework_TestCase
 {

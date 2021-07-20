@@ -1,6 +1,6 @@
 {
-    "name": "phpwhois/phpwhois",
-    "description": "phpWhois - library for querying whois services and parsing results. Based on phpwhois.org",
+    "name": "shirakun/phpwhois",
+    "description": "This is a revision of phpWhois, mainly adjusting the directory structure and some of the deprecated syntax.",
     "keywords": ["PHP","Whois","phpWhois"],
     "homepage": "http://phpwhois.pw",
     "type": "library",
@@ -21,11 +21,15 @@
         {
             "name": "Dmitry Lukashin",
             "email": "dmitry@lukashin.ru"
+        },
+        {
+            "name": "Shira Kagurazaka",
+            "email": "github@ni-co.moe"
         }
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.0",
+        "php": ">=5.6.0",
         "mso/idna-convert": "*"
     },
     "require-dev": {
@@ -36,7 +40,7 @@
     },
     "autoload": {
         "psr-4": {
-            "phpWhois\\": "src/"
+            "shirakun\\": "src/"
         }
     }
 }

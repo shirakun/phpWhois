@@ -1,6 +1,6 @@
 <?php
 
-use phpWhois\IpTools;
+use shirakun\IpTools;
 
 class IpToolsTest extends \PHPUnit_Framework_TestCase
 {
