@@ -310,11 +310,11 @@ class WhoisClient
             'z'        => 'http://www.adns.net/whois.php?txtDOMAIN={domain}.{tld}',
         );
 
-        $this->DATA               = $servers['DATA'];
-        $this->NON_UTF8           = $servers['NON_UTF8'];
-        $this->WHOIS_PARAM        = $servers['WHOIS_PARAM'];
-        $this->WHOIS_SPECIAL      = $servers['WHOIS_SPECIAL'];
-        $this->WHOIS_GTLD_HANDLER = $servers['WHOIS_GTLD_HANDLER'];
+        // $this->DATA               = $servers['DATA'];
+        // $this->NON_UTF8           = $servers['NON_UTF8'];
+        // $this->WHOIS_PARAM        = $servers['WHOIS_PARAM'];
+        // $this->WHOIS_SPECIAL      = $servers['WHOIS_SPECIAL'];
+        // $this->WHOIS_GTLD_HANDLER = $servers['WHOIS_GTLD_HANDLER'];
 
         $this->codeVersion = file_get_contents(__DIR__ . '/../VERSION');
         // Set version
@@ -702,7 +702,7 @@ class WhoisClient
         $HANDLER_FLAG = sprintf("__%s_HANDLER__", strtoupper($handler_name));
 
         if (!defined($HANDLER_FLAG)) {
-            include $this->query['file'];
+            include __DIR__ . '/Handler/' . $this->query['file'];
         }
 
         // If the handler has still not been included, append to query errors list and return
@@ -711,12 +711,12 @@ class WhoisClient
             return $result;
         }
 
-        if (!$this->gtldRecurse && $this->query['file'] == 'whois.gtld.php') {
+        if (!$this->gtldRecurse && $this->query['file'] == 'Handler\whois.gtld.php') {
             return $result;
         }
 
         // Pass result to handler
-        $object = "shirakun\Handler\{$handler_name}_handler";
+        $object = "shirakun\Handler\\" . $handler_name . "_handler";
 
         $handler = new $object('');
 
@@ -766,7 +766,7 @@ class WhoisClient
             }
 
             if (!empty($this->query['handler'])) {
-                $this->query['file'] = sprintf('whois.gtld.%s.php', $this->query['handler']);
+                $this->query['file'] = sprintf('Handler\whois.gtld.%s.php', $this->query['handler']);
                 $regrinfo            = $this->process($subresult); //$result['rawdata']);
                 $result['regrinfo']  = $this->mergeResults($result['regrinfo'], $regrinfo);
                 //$result['rawdata'] = $subresult;

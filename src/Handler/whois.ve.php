@@ -1,9 +1,7 @@
 <?php 
 namespace shirakun\Handler;
 /*
-Whois.<?php 
-namespace shirakun\Handler;        <?php 
-namespace shirakun\Handler; classes to conduct whois queries
+WhoisPHP        PHP classes to conduct whois queries
 
 Copyright (C)1999,2005 easyDNS Technologies Inc. & Mark Jeftovic
 
@@ -11,8 +9,7 @@ Maintained by David Saez
 
 For the most recent version of this package visit:
 
-http://www.<?php 
-namespace shirakun\Handler;whois.org
+http://www.php.org
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

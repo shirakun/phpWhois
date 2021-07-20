@@ -1,7 +1,7 @@
 <?php 
-namespace shirakun\Handler;
+namespace shirakun;
 
-class idna_convert
+class IdnaConvert
 {
     /**
      * Holds all relevant mapping tables, loaded from a seperate file on construct
@@ -775,8 +775,7 @@ class idna_convert
     /**
      * This converts an UTF-8 encoded string to its UCS-4 representation
      * By talking about UCS-4 "strings" we mean arrays of 32bit integers representing
-     * each of the "chars". This is due to <?php 
-namespace shirakun\Handler; not being able to handle strings with
+     * each of the "chars". This is due to php not being able to handle strings with
      * bit depth different from 8. This apllies to the reverse method _ucs4_to_utf8(), too.
      * The following UTF-8 encodings are supported:
      * bytes bits  representation
@@ -947,10 +946,10 @@ namespace shirakun\Handler; not being able to handle strings with
 }
 
 /**
- * Adapter class for aligning the API of  with that of Net_IDNA
+ * Adapter class for aligning the API of idna_convert with that of Net_IDNA
  * @author  Matthias Sommerfeld <mso@phlylabs.de>
  */
-class Net_IDNA_Net_IDNA_php4 extends idna_convert
+class Net_IDNA_Net_IDNA_php4 extends IdnaConvert
 {
     /**
      * Sets a new option value. Available options and values:

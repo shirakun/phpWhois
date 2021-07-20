@@ -1,5 +1,8 @@
-<?php 
+<?php
 namespace shirakun\Handler;
+
+use shirakun\WhoisClient;
+
 /*
 Whois.php        PHP classes to conduct whois queries
 
@@ -30,8 +33,7 @@ if (!defined('__IP_HANDLER__')) {
     define('__IP_HANDLER__', 1);
 }
 
-require_once 'whois.ip.lib.<?php 
-namespace shirakun\Handler;';
+// require_once 'whois.ip.lib.php';
 
 class ip_handler extends WhoisClient
 {
@@ -129,8 +131,7 @@ class ip_handler extends WhoisClient
             }
 
             if (!$found) {
-                $this->Query['file']    = 'whois.ip.arin.<?php 
-namespace shirakun\Handler;';
+                $this->Query['file']    = 'Handler\whois.ip.arin.php';
                 $this->Query['handler'] = 'arin';
                 $result                 = $this->parse_results($result, $rwdata, $query, true);
             }
@@ -152,8 +153,7 @@ namespace shirakun\Handler;';
                     if (!empty($srv_data['file'])) {
                         $this->Query['file'] = $srv_data['file'];
                     } else {
-                        $this->Query['file'] = 'whois.' . $this->Query['handler'] . '.<?php 
-namespace shirakun\Handler;';
+                        $this->Query['file'] = 'Handler\whois.' . $this->Query['handler'] . '.php';
                     }
 
                 }
@@ -189,6 +189,7 @@ namespace shirakun\Handler;';
     public function parse_results($result, $rwdata, $query, $reset)
     {
         $rwres = $this->Process($rwdata);
+        var_dump($rwres);exit;
 
         if ($result['regyinfo']['type'] == 'AS' && !empty($rwres['regrinfo']['network'])) {
             $rwres['regrinfo']['AS'] = $rwres['regrinfo']['network'];
@@ -261,8 +262,7 @@ namespace shirakun\Handler;';
 
         if (isset($this->HANDLERS[$host])) {
             $q['handler'] = $this->HANDLERS[$host];
-            $q['file']    = sprintf('whois.ip.%s.<?php 
-namespace shirakun\Handler;', $q['handler']);
+            $q['file']    = sprintf('whois.ip.%s.php', $q['handler']);
             $q['reset']   = true;
         } else {
             $q['handler'] = 'rwhois';
