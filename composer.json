@@ -40,8 +40,9 @@
     },
     "autoload": {
         "psr-4": {
-            "shirakun\\": "src/",
-            "classmap": ["src/Handler/"]
-        }
+            "shirakun\\": "src/"
+        },
+        "classmap": ["src/Handler/"]
+
     }
 }
