@@ -22,9 +22,7 @@
  * @copyright Copyright (c) 2014 Dmitry Lukashin
  */
 
-namespace shirakun;
-
-use shirakun\IdnaConvert;
+namespace phpWhois;
 
 /**
  * phpWhois main class
@@ -77,7 +75,7 @@ class Whois extends WhoisClient
 
         $query = trim($query);
 
-        $idn = new IdnaConvert();
+        $idn = new \idna_convert();
 
         if ($is_utf) {
             $query = $idn->encode($query);
@@ -105,16 +103,16 @@ class Whois extends WhoisClient
 
                 if (isset($this->WHOIS_SPECIAL['ip'])) {
                     $this->query['server'] = $this->WHOIS_SPECIAL['ip'];
-                    $this->query['args']   = $ip;
+                    $this->query['args'] = $ip;
                 } else {
-                    $this->query['server']  = 'whois.arin.net';
-                    $this->query['args']    = "n $ip";
-                    $this->query['file']    = 'whois.ip.php';
+                    $this->query['server'] = 'whois.arin.net';
+                    $this->query['args'] = "n $ip";
+                    $this->query['file'] = 'whois.ip.php';
                     $this->query['handler'] = 'ip';
                 }
-                $this->query['host_ip']   = $ip;
-                $this->query['query']     = $ip;
-                $this->query['tld']       = 'ip';
+                $this->query['host_ip'] = $ip;
+                $this->query['query'] = $ip;
+                $this->query['tld'] = 'ip';
                 $this->query['host_name'] = @gethostbyaddr($ip);
 
                 return $this->getData('', $this->deepWhois);
@@ -127,38 +125,38 @@ class Whois extends WhoisClient
                 if (isset($this->WHOIS_SPECIAL['ip'])) {
                     $this->query['server'] = $this->WHOIS_SPECIAL['ip'];
                 } else {
-                    $this->query['server']  = 'whois.ripe.net';
-                    $this->query['file']    = 'whois.ip.ripe.php';
+                    $this->query['server'] = 'whois.ripe.net';
+                    $this->query['file'] = 'whois.ip.ripe.php';
                     $this->query['handler'] = 'ripe';
                 }
                 $this->query['query'] = $ip;
-                $this->query['tld']   = 'ip';
+                $this->query['tld'] = 'ip';
                 return $this->getData('', $this->deepWhois);
                 break;
 
             case self::QTYPE_AS:
                 // AS Prepare to do lookup via the 'ip' handler
-                $ip                    = @gethostbyname($query);
+                $ip = @gethostbyname($query);
                 $this->query['server'] = 'whois.arin.net';
                 if (strtolower(substr($ip, 0, 2)) == 'as') {
                     $as = substr($ip, 2);
                 } else {
                     $as = $ip;
                 }
-                $this->query['args']    = "a $as";
-                $this->query['file']    = 'whois.ip.php';
+                $this->query['args'] = "a $as";
+                $this->query['file'] = 'whois.ip.php';
                 $this->query['handler'] = 'ip';
-                $this->query['query']   = $ip;
-                $this->query['tld']     = 'as';
+                $this->query['query'] = $ip;
+                $this->query['tld'] = 'as';
                 return $this->getData('', $this->deepWhois);
                 break;
         }
 
         // Build array of all possible tld's for that domain
-        $tld      = '';
-        $server   = '';
-        $dp       = explode('.', $domain);
-        $np       = count($dp) - 1;
+        $tld = '';
+        $server = '';
+        $dp = explode('.', $domain);
+        $np = count($dp) - 1;
         $tldtests = array();
 
         for ($i = 0; $i < $np; $i++) {
@@ -181,7 +179,7 @@ class Whois extends WhoisClient
                 }
 
                 $domain = substr($query, 0, -strlen($tld) - 1);
-                $val    = str_replace('{domain}', $domain, $val);
+                $val = str_replace('{domain}', $domain, $val);
                 $server = str_replace('{tld}', $tld, $val);
                 break;
             }
@@ -205,8 +203,8 @@ class Whois extends WhoisClient
         if ($tld && $server) {
             // If found, set tld and whois server in query array
             $this->query['server'] = $server;
-            $this->query['tld']    = $tld;
-            $handler               = '';
+            $this->query['tld'] = $tld;
+            $handler = '';
 
             foreach ($tldtests as $htld) {
                 // special handler exists for the tld ?
@@ -224,14 +222,14 @@ class Whois extends WhoisClient
 
             // If there is a handler set it
             if ($handler != '') {
-                $this->query['file']    = "Handler\whois.$handler.php";
+                $this->query['file'] = "whois.$handler.php";
                 $this->query['handler'] = $handler;
             }
 
             // Special parameters ?
             if (isset($this->WHOIS_PARAM[$server])) {
                 $this->query['server'] = $this->query['server'] . '?' . str_replace('$', $domain,
-                    $this->WHOIS_PARAM[$server]);
+                        $this->WHOIS_PARAM[$server]);
             }
 
             $result = $this->getData('', $this->deepWhois);
@@ -250,8 +248,8 @@ class Whois extends WhoisClient
     {
         unset($this->query['server']);
         $this->query['status'] = 'error';
-        $result                = array('rawdata' => array());
-        $result['rawdata'][]   = $this->query['errstr'][]   = $this->query['query'] . ' domain is not supported';
+        $result = array('rawdata' => array());
+        $result['rawdata'][] = $this->query['errstr'][] = $this->query['query'] . ' domain is not supported';
         $this->checkDns($result);
         $this->fixResult($result, $this->query['query']);
         return $result;

@@ -22,7 +22,7 @@
  * @copyright Copyright (c) 2014 Dmitry Lukashin
  */
 
-namespace shirakun;
+namespace phpWhois;
 
 /**
  * Additional utils
